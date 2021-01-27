@@ -18,9 +18,13 @@
   height: 64px;
   border-radius: 100px;
   border: white;
-  padding-left: 24px;
   padding: 0;
+  padding-left: 24px;
   margin: 0;
+}
+
+.search__input:focus {
+  outline: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .search-form__button {
@@ -79,12 +83,13 @@
     padding: 0 10px;
     margin-bottom: 16px;
   }
+
   .search-form__button {
     width: 100px;
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 480px) {
   .search-form {
     overflow: visible;
     display: flex;
@@ -100,6 +105,7 @@
     padding: 0 16px;
     margin-bottom: 16px;
   }
+
   .search-form__button {
     position: relative;
     width: 288px;
