@@ -1,0 +1,73 @@
+.about {
+  display: flex;
+  color: #1a1b22;
+  padding: 80px 104px;
+  align-items: center;
+  gap: 56px;
+}
+
+.about__image {
+  max-width: 446px;
+  max-height: 446px;
+}
+
+.about__info {
+  align-self: flex-start;
+  padding-top: 50px;
+}
+
+.about__title {
+  font-family: "Roboto Slab", sans-serif;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 46px;
+  margin: 0;
+}
+
+.about__description {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  max-width: 604px;
+  padding-top: 24px;
+  margin: 0;
+}
+
+@media screen and (max-width: 1024px) {
+  .about {
+    padding: 61px 40px;
+    gap: 32px;
+  }
+
+  .about__image {
+    max-width: 232px;
+    max-height: 232px;
+  }
+
+  .about__info {
+    padding: 0;
+  }
+
+  .about__description {
+    padding-top: 16px;
+  }
+
+  .about__title {
+    font-size: 30px;
+    line-height: 40px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .about {
+    flex-direction: column;
+    padding: 32px 16px;
+    gap: 24px;
+  }
+
+  .about__img {
+    max-width: 272px;
+    max-height: 272px;
+  }
+}
