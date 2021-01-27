@@ -1,0 +1,75 @@
+.button {
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.button__main {
+  width: 288px;
+  border: 1px solid white;
+  border-radius: 100px;
+  background: white;
+  color: #1a1b22;
+  align-self: center;
+  margin-top: 64px;
+  padding: 18px 0;
+  transition: 0.7s ease;
+  cursor: pointer;
+}
+
+.button__main:hover {
+  opacity: 0.9;
+}
+
+.button__header {
+  padding: 12px 19px;
+  max-width: 176px;
+  border: 1px solid;
+  margin: 0;
+  border-radius: 100px;
+  color: inherit;
+  fill: inherit;
+  background: transparent;
+}
+
+@media screen and (max-width: 1280px) {
+  .button__header {
+    font-size: 16px;
+    padding: 8px 12px;
+    background: inherit;
+  }
+
+  .button__main {
+    width: 240px;
+    margin-top: 32px;
+    padding: 15px 0;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .button__header {
+    display: none;
+    align-self: center;
+    min-width: 288px;
+    font-size: 16px;
+    padding: 15px 12px;
+    margin-left: 16px;
+    margin-bottom: 16px;
+  }
+
+  .button__header_type_visible {
+    display: block;
+  }
+}
+
+
+@media screen and (max-width: 320px) {
+
+  .button__main {
+    width: 288px;
+    margin-top: 15px;
+    padding: 15px 0;
+  }
+}
