@@ -22,7 +22,6 @@ function NewsCardList({ articles, saveArticles, onSaveArticle, onDeleteArticle, 
                 <NewsCard
                   key={index}
                   article={article}
-                  type='main'
                   onSaveArticle={onSaveArticle}
                 />
               ))
@@ -45,7 +44,6 @@ function NewsCardList({ articles, saveArticles, onSaveArticle, onDeleteArticle, 
               <NewsCard
                 key={article._id}
                 article={article}
-                type='save'
                 onDeleteArticle={onDeleteArticle}
               />
             ))}

@@ -119,12 +119,12 @@ function App() {
           setResultNotFound(false);
           const data = res.articles;
           const savedLinks = saveArticles.map(({ link }) => link);
-          const qwe = data.map((card) => {
+          const saved = data.map((card) => {
             const isSaved = savedLinks.includes(card.url);
             return isSaved;
           });
           for(let i = 0; i < data.length; i++) {
-            data[i].isSaved = qwe[i];
+            data[i].isSaved = saved[i];
             data[i].keyword = searchValue;
           }
           setArticles(data);
