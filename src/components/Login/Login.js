@@ -3,7 +3,7 @@ import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import Input from '../Input/Input';
 import useFormValidation from '../../hooks/FormValidator';
 
-function Login({ onLogin, isOpen, onClose, changeModal }) {
+function Login({ onLogin, isOpen, onClose, changeModal, message }) {
   const {
     values,
     handleChange,
@@ -33,6 +33,7 @@ function Login({ onLogin, isOpen, onClose, changeModal }) {
       changeModal={changeModal}
       text={'или '}
       isValid={isValid}
+      errorValidation={message}
     >
       <Input
         labelValue={'Email'}

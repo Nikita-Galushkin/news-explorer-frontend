@@ -13,3 +13,6 @@
 
 nmp run dev - запуск в режиме разработки
 npm run build - компиляция продакшен версии
+
+Приложение доступно по адресу: 
+new-gavrik.students.nomoreparties.xyz

@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import './Navigation.css';
 
 function Navigation({ loggedIn, isOpenMenu }) {
+  
   return (
     <nav className={!isOpenMenu ? "navigation" : "navigation navigation_type_visible"}>
       { !loggedIn ? (

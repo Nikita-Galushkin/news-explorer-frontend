@@ -11,7 +11,7 @@
 }
 
 .card__image {
-  max-height: 272px;
+  height: 272px;
   object-fit: cover;
 }
 
@@ -147,7 +147,7 @@
   }
 
   .card__image {
-    max-height: 150px;
+    height: 150px;
   }
 
   .card__info {
@@ -192,7 +192,7 @@
   }
 
   .card__image {
-    max-height: 196px;
+    height: 196px;
   }
 
   .card__info {
