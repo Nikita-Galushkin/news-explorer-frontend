@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import { getArticleDate } from '../../utils/utils';
 import imageDefult from '../../images/image_01.jpg';
 
-function NewsCard({ article, onSaveArticle, onDeleteArticle }) {
+function NewsCard({ article, onSaveArticle, setIsRegisterOpen, onDeleteArticle }) {
   const [spanClassName, setSpanClassName] = React.useState('card__span');
   const [toSaveArticle, setToSaveArticle] = React.useState({
     keyword: '',
@@ -45,6 +45,8 @@ function NewsCard({ article, onSaveArticle, onDeleteArticle }) {
       e.target.classList.remove('card__button_type_save');
       e.target.classList.add('card__button_type_save-active');  
       onSaveArticle(toSaveArticle);
+    } else {
+      setIsRegisterOpen(true);
     }
   };
   

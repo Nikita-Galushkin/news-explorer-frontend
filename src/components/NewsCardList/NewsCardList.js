@@ -3,8 +3,9 @@ import { Route, Switch } from 'react-router-dom';
 import './NewsCardList.css';
 import NewsCard from '../NewsCard/NewsCard';
 import Button from '../Button/Button';
+import { NUMBER_OF_CARDS } from '../../utils/constants';
 
-function NewsCardList({ articles, saveArticles, onSaveArticle, onDeleteArticle, cardsClassName }) {
+function NewsCardList({ articles, saveArticles, onSaveArticle, setIsRegisterOpen, onDeleteArticle, cardsClassName }) {
   const [onClick, setOnClick] = React.useState(false);
   
   const handleClick = () => {
@@ -18,11 +19,12 @@ function NewsCardList({ articles, saveArticles, onSaveArticle, onDeleteArticle, 
           <h1 className="cards__title">Результаты поиска</h1>
           <ul className="cards__list">
             { !onClick
-              ? articles && articles.slice(0, 3).map((article, index) => (
+              ? articles && articles.slice(0, NUMBER_OF_CARDS).map((article, index) => (
                 <NewsCard
                   key={index}
                   article={article}
                   onSaveArticle={onSaveArticle}
+                  setIsRegisterOpen={setIsRegisterOpen}
                 />
               ))
               : articles && articles.map((article, index) => (
@@ -31,6 +33,7 @@ function NewsCardList({ articles, saveArticles, onSaveArticle, onDeleteArticle, 
                   article={article}
                   type='main'
                   onSaveArticle={onSaveArticle}
+                  setIsRegisterOpen={setIsRegisterOpen}
                 />
               ))}
           </ul>

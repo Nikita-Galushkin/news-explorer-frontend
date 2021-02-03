@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -23,7 +23,7 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [articles, setArticles] = React.useState([]);
   const [saveArticles, setSaveArticles] = React.useState([]);
-  
+
   const [isLoginOpen, setIsLoginOpen] = React.useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = React.useState(false);
   const [isSuccessRegisterOpen, setIsSuccessRegisterOpen] = React.useState(false);
@@ -33,20 +33,38 @@ function App() {
   const history = useHistory();
 
   React.useEffect(() => {
+    const routerState = history.location.state;
+    if (!localStorage.getItem('jwt') && routerState && routerState.noAuthRedirected && history.action === "REPLACE") {
+      setIsLoginOpen(true);
+    };
+  }, []);
+
+  React.useEffect(() => {
     const jwt = localStorage.getItem('jwt');
     if (!jwt) {
       return;
     };
+
     if (jwt) {
-      api.getContent(jwt)
-        .then((data) => {
-          if (data){
-            setCurrentUser(data);
-          }
-          if (JSON.parse(localStorage.getItem('allArticles')) !== null) {
-            setSaveArticles(JSON.parse(localStorage.getItem('allArticles')));
-          }
+      Promise.all([ api.getContent(jwt), api.getArticles(jwt) ])
+        .then(([ info, data ]) => {
+          setCurrentUser(info);
+          setSaveArticles(data);
           setLoggedIn(true);
+
+          if (JSON.parse(localStorage.getItem('allArticles')) !== null) {
+            const arrArticles = JSON.parse(localStorage.getItem('allArticles'));
+            const savedLinks = saveArticles.map(({ link }) => link);
+            const saved = arrArticles.map((card) => {
+              const isSaved = savedLinks.includes(card.url);
+                return isSaved;
+            });
+            for (let i = 0; i < arrArticles.length; i++) {
+              arrArticles[i].isSaved = saved[i];
+            };
+            setArticles(arrArticles);
+            setShowNewsCardList(true);
+          };
         })
         .catch((err) => {
           console.error(err);
@@ -84,7 +102,7 @@ function App() {
       })
       .catch((err) => {
         console.error(err);
-        setMessage('Такой пользователь уже существует');
+        setMessage(err);
       });
   }
 
@@ -97,7 +115,7 @@ function App() {
       })
       .catch((err) => {
         console.error(err);
-        setMessage('Что то пошло не так');
+        setMessage(err);
       });
   }
 
@@ -117,17 +135,19 @@ function App() {
           setResultNotFound(true);
         } else {
           setResultNotFound(false);
-          const data = res.articles;
+          const arrArticles = res.articles;
           const savedLinks = saveArticles.map(({ link }) => link);
-          const saved = data.map((card) => {
+          const saved = arrArticles.map((card) => {
             const isSaved = savedLinks.includes(card.url);
             return isSaved;
           });
-          for(let i = 0; i < data.length; i++) {
-            data[i].isSaved = saved[i];
-            data[i].keyword = searchValue;
-          }
-          setArticles(data);
+          for (let i = 0; i < arrArticles.length; i++) {
+            arrArticles[i].isSaved = saved[i];
+            arrArticles[i].keyword = searchValue;
+          };
+
+          localStorage.setItem('allArticles', JSON.stringify(arrArticles));
+          setArticles(arrArticles);
           setShowNewsCardList(true);
         }
       })
@@ -144,11 +164,6 @@ function App() {
   function handleSaveArticle(article) {
     api.saveArticle(article)
       .then((art) => {
-        let existingArticles = JSON.parse(localStorage.getItem('allArticles'));
-        if(existingArticles == null) existingArticles = [];
-        existingArticles.push(art);
-        localStorage.setItem('allArticles', JSON.stringify(existingArticles));
-
         setSaveArticles([...saveArticles, art]);
       })
       .catch((err) => {
@@ -161,8 +176,6 @@ function App() {
       .then(() => {
         const newArrArticles = saveArticles.filter(i => i._id !== article._id);
         setSaveArticles(newArrArticles);
-
-        localStorage.setItem('allArticles', JSON.stringify(newArrArticles));
       })
       .catch((err) => {
         console.error(err);
@@ -190,11 +203,12 @@ function App() {
               <NewsCardList 
                 articles={articles}
                 onSaveArticle={handleSaveArticle}
+                setIsRegisterOpen={setIsRegisterOpen}
               />
             }
             <About />
           </Route>
-          <ProtectedRoute path="/saved-news" loggedIn={loggedIn} >
+          <ProtectedRoute exact path="/saved-news" loggedIn={loggedIn} >
             <Header
               headerClassName={'header header__saved-news'}
               loggedIn={loggedIn}
@@ -206,6 +220,9 @@ function App() {
               onDeleteArticle={handleDeleteArticle}
             />
           </ProtectedRoute>
+          <Route path="">
+            <Redirect to={{ pathname: "/", state: { noAuthRedirected: true } }} />
+          </Route>
         </Switch>
         <Login
           onLogin={handleLogin}

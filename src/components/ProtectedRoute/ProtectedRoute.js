@@ -8,7 +8,7 @@ function ProtectedRoute({ component: Component, ...props  }) {
         ? <>
           {props.children}
         </>
-        : <Redirect to='/' />
+        : <Redirect to={{ pathname: "/", state: { noAuthRedirected: true } }} />
       }
     </Route>
   );
