@@ -2,6 +2,7 @@ import React from 'react';
 import './ResultNotFound.css';
 
 function ResultNotFound() {
+
   return (
     <section className="result-not-found">
       <div className="result-not-found__image"></div>

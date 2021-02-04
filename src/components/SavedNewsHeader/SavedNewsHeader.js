@@ -6,6 +6,7 @@ function SavedNewsHeader({ saveArticles }) {
   const [keywords, setKeywords] = React.useState([]);
   const [keywordsList, setKeywordsList] = React.useState('');
   const [declination, setDeclination] = React.useState('');
+  const [keywordsAdditional, setKeywordsAdditional] = React.useState('');
 
   const currentUser = React.useContext(CurrentUserContext);
   const userName = currentUser.name;
@@ -19,33 +20,37 @@ function SavedNewsHeader({ saveArticles }) {
   }, [saveArticles, userName]);
 
   React.useEffect(() => {
-    const numberOfKeywords = saveArticles.length;
+    const numberOfKeywords = keywords.length;
+    console.log(numberOfKeywords);
     if (numberOfKeywords === 0) {
       setDeclination('сохраненных статей');
     };
 
     if (numberOfKeywords === 1) {
-      setKeywordsList(keywords.slice(0, numberOfKeywords));
+      setKeywordsList(keywords.slice(0, 1));
       setDeclination('сохраненная статья');
+      setKeywordsAdditional('');
     };
 
     if (numberOfKeywords === 2) {
       const words = keywords.join(', ');
       setKeywordsList(words);
       setDeclination('сохраненных статьи');
-      console.log(numberOfKeywords);
+      setKeywordsAdditional('');
     };
 
     if (numberOfKeywords === 3) {
-      const words = keywords.slice(0, numberOfKeywords).join(', ');
+      const words = keywords.slice(0, 2).join(', ');
       setKeywordsList(words);
       setDeclination('сохраненных статьи');
+      setKeywordsAdditional(` и ${numberOfKeywords - 2}-му другому`);
     };
 
     if (numberOfKeywords > 3) {
-      const words = keywords.slice(0, numberOfKeywords).join(', ');
+      const words = keywords.slice(0, 2).join(', ');
       setKeywordsList(words);
       setDeclination('сохраненных статей');
+      setKeywordsAdditional(` и ${numberOfKeywords - 2}-м другим`);
     };
 
     if (numberOfKeywords === 4) {
@@ -61,9 +66,10 @@ function SavedNewsHeader({ saveArticles }) {
       <p className="saved-news__keyword">
         По ключевым словам:
         <span className="saved-news__keyword-bold"> {keywordsList}</span>
+        <span className="saved-news__keyword-bold">{keywordsAdditional}</span>
       </p>
     </section>
   );
 }
-
+// keywordsAdditional
 export default SavedNewsHeader;
