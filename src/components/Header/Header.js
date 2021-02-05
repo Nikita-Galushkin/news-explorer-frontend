@@ -3,9 +3,11 @@ import { Route, Switch, Link } from 'react-router-dom';
 import './Header.css';
 import Button from '../Button/Button';
 import Navigation from '../Navigation/Navigation';
+import CurrentUserContext from '../../contexts/CurrentUserContext.js';
 
-function Header({ headerClassName, onAuthorizeClick, loggedIn, logOut, onClose }) {
+function Header({ headerClassName, onAuthorizeClick, loggedIn, handleLogout, onClose }) {
   const [isOpenMenu, setIsOpenMenu] = React.useState(false);
+  const currentUser = React.useContext(CurrentUserContext);
 
   const handleMenu = (e) => {
     if (!isOpenMenu) {
@@ -32,7 +34,7 @@ function Header({ headerClassName, onAuthorizeClick, loggedIn, logOut, onClose }
         <Navigation
           onAuthorizeClick={onAuthorizeClick}
           loggedIn={loggedIn}
-          logOut={logOut}
+          handleLogout={handleLogout}
           isOpenMenu={isOpenMenu}
         />
         { !loggedIn ? (
@@ -47,16 +49,16 @@ function Header({ headerClassName, onAuthorizeClick, loggedIn, logOut, onClose }
               <Link
                 to="/"
                 className={!isOpenMenu ? "header__link header__link_type_logout-main" : "header__link header__link_type_logout-main header__link_type_visible"} 
-                onClick={logOut}>
-                Грета
+                onClick={handleLogout}>
+                {currentUser.name}
               </Link>
             </Route>
             <Route path="/saved-news">
               <Link
                 to="/"
                 className={!isOpenMenu ? "header__link header__link_type_logout-saved-news" : "header__link header__link_type_logout-saved-news header__link_type_visible"}
-                onClick={logOut}>
-                Грета
+                onClick={handleLogout}>
+                {currentUser.name}
               </Link>
             </Route>
           </Switch>

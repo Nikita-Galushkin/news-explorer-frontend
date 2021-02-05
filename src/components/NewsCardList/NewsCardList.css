@@ -1,14 +1,19 @@
 .cards {
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  background: #f5f6f7;
-  padding: 80px 104px;
   flex-shrink: 1;
+  min-height: 240px;
+  width: 100%;
+  max-width: 1440px;
+  background-color: #f5f6f7;
+  box-sizing: border-box;
+  padding: 40px 104px 56px;
+  margin: 0 auto;
+  text-align: left;
 }
 
-.cards_type_saved-news {
-  padding: 62px 104px;
+.cards_type_length {
+  background: #fff;
 }
 
 .cards__list {

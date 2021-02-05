@@ -2,16 +2,16 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './NewsCardList.css';
 import NewsCard from '../NewsCard/NewsCard';
-import arrCard from '../../utils/arrCard';
 import Button from '../Button/Button';
+import { NUMBER_OF_CARDS } from '../../utils/constants';
 
-function NewsCardList({ cardsClassName }) {
+function NewsCardList({ articles, saveArticles, onSaveArticle, setIsRegisterOpen, onDeleteArticle, cardsClassName }) {
   const [onClick, setOnClick] = React.useState(false);
-
+  
   const handleClick = () => {
     setOnClick(true);
   };
-  
+
   return (
     <section className={`cards ${cardsClassName}`}>
       <Switch>
@@ -19,45 +19,35 @@ function NewsCardList({ cardsClassName }) {
           <h1 className="cards__title">Результаты поиска</h1>
           <ul className="cards__list">
             { !onClick
-              ? arrCard.slice(0, 3).map((card) => (
+              ? articles && articles.slice(0, NUMBER_OF_CARDS).map((article, index) => (
                 <NewsCard
-                  key={card._id}
-                  img={card.img}
-                  title={card.title}
-                  text={card.text}
-                  link={card.link}
-                  source={card.source}
-                  date={card.date}
-                  keyword={card.keyword}
+                  key={index}
+                  article={article}
+                  onSaveArticle={onSaveArticle}
+                  setIsRegisterOpen={setIsRegisterOpen}
                 />
               ))
-              : arrCard.map((card) => (
+              : articles && articles.map((article, index) => (
                 <NewsCard
-                  key={card._id}
-                  img={card.img}
-                  title={card.title}
-                  text={card.text}
-                  link={card.link}
-                  source={card.source}
-                  date={card.date}
-                  keyword={card.keyword}
+                  key={index}
+                  article={article}
+                  type='main'
+                  onSaveArticle={onSaveArticle}
+                  setIsRegisterOpen={setIsRegisterOpen}
                 />
               ))}
           </ul>
-          <Button onClick={handleClick} name="Показать ещё" className="button button__main" />
+          { !onClick 
+          ? <Button onClick={handleClick} name="Показать ещё" className="button button__main" />
+          : null}
         </Route>
         <Route path="/saved-news">
           <ul className="cards__list">
-            { arrCard.map((card) => (
+            {saveArticles && saveArticles.map((article) => (
               <NewsCard
-                key={card._id}
-                img={card.img}
-                title={card.title}
-                text={card.text}
-                link={card.link}
-                source={card.source}
-                date={card.date}
-                keyword={card.keyword}
+                key={article._id}
+                article={article}
+                onDeleteArticle={onDeleteArticle}
               />
             ))}
           </ul>

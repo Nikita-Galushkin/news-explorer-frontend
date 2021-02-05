@@ -3,7 +3,7 @@ import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import Input from '../Input/Input';
 import useFormValidation from '../../hooks/FormValidator';
 
-function Register({ onRegister, isOpen, onClose, changeModal }) {
+function Register({ onRegister, isOpen, onClose, changeModal, message }) {
   const {
     values,
     handleChange,
@@ -33,7 +33,7 @@ function Register({ onRegister, isOpen, onClose, changeModal }) {
       changeModal={changeModal}
       text={'или '}
       isValid={isValid}
-      errorValidation={'Такой пользователь уже есть'}
+      errorValidation={message}
     >
       <Input
         labelValue={'Email'}

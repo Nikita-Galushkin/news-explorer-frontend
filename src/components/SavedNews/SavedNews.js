@@ -3,11 +3,18 @@ import NewsCardList from '../NewsCardList/NewsCardList';
 import SavedNewsHeader from '../SavedNewsHeader/SavedNewsHeader';
 import './SavedNews.css';
 
-function SavedNews({ cards }) {
+function SavedNews({ saveArticles, onDeleteArticle }) {
+  
   return (
     <>
-      <SavedNewsHeader cards={cards} />
-      <NewsCardList cardsClassName="cards_type_saved-news" />
+      <SavedNewsHeader 
+        saveArticles={saveArticles}
+      />
+      <NewsCardList
+        saveArticles={saveArticles}
+        onDeleteArticle={onDeleteArticle}
+        cardsClassName={saveArticles.length === 0 ? 'cards_type_length' : ''} 
+      />
     </>
   );
 }
